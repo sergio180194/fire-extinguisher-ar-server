@@ -1,0 +1,20 @@
+{
+    "name": "07-restserver",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node server/app.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "aws-sdk": "^2.335.0",
+        "body-parser": "^1.18.2",
+        "express": "^4.16.2",
+        "fast-csv": "^2.4.1",
+        "mongoose": "^5.3.3",
+        "mysql": "^2.16.0"
+    }
+}
