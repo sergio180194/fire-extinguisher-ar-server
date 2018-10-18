@@ -23,7 +23,14 @@ let usuarioSchema = new Schema({
         type: Number,
         required: [true, 'Gender is required']
     },
-
+    email: {
+        type: String,
+        required: [true, 'Email is required']
+    },
+    score: {
+        type: Number,
+        required: [true, 'Score is required']
+    }
 });
 
 module.exports = mongoose.model('Usuario', usuarioSchema);

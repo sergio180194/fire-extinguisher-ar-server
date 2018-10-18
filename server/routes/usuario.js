@@ -28,15 +28,16 @@ app.post('/usuario', function(req, res) {
         age: body.age,
         career: body.career,
         semester: body.semester,
-        gender: body.gender
-
+        gender: body.gender,
+        email: body.email,
+        score: body.score
     }); //objeto de tipo usuario
 
     let myConnectMySql = new MYSQL(dbConfig);
 
     //myConnectMySql.addUser('user', usuario.name, usuario.age, usuario.career, usuario.semester, usuario.gender);
 
-    myConnectMySql.addUser('user', usuario.name, usuario.age, usuario.career, usuario.semester, usuario.gender, resulData => {
+    myConnectMySql.addUser('user', usuario.name, usuario.age, usuario.career, usuario.semester, usuario.gender, usuario.email, usuario.score, resulData => {
         //myConnectMySql.closeConnection();
         return res.json({
             ok: true,
@@ -48,9 +49,16 @@ app.post('/usuario', function(req, res) {
 app.put('/usuario/:id', function(req, res) {
 
     let id = req.params.id;
+    let score = req.body.score;
 
-    res.json({
-        id
+    let myConnectMySql = new MYSQL(dbConfig);
+
+    myConnectMySql.updateUser('user', id, score, resulData => {
+        //myConnectMySql.closeConnection();
+        return res.json({
+            ok: true,
+            data: resulData
+        });
     });
 });
 

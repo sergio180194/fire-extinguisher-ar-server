@@ -31,17 +31,30 @@ module.exports = class MysqlConnect {
     getUser(table, resultData) {
         let query = `select * from ${table}`;
         this.connection.query(query, (err, result) => {
-            this.closeConnection();
+            //this.closeConnection();
             if (err) console.log(err);
             else resultData(result);
         });
     }
 
-    addUser(table, nombre, edad, carrera, semestre, sexo, resultData) {
-        let col = '(`nombre`, `edad`, `carrera`, `semestre`, `sexo`)';
+    addUser(table, name, age, career, semester, gender, email, score, resultData) {
+        let col = '(`name`, `age`, `career`, `semester`, `gender`, `email`, `score`)';
         let insert = `insert into ${table} ${col}
-        values ('${nombre}', ${edad}, ${carrera}, ${semestre}, ${sexo})`;
+        values ('${name}', ${age}, ${career}, ${semester}, ${gender},'${email}',${score})`;
         this.connection.query(insert, (err, result) => {
+            if (err) console.log(err);
+            else {
+                /*  this.getUser('user', resulData => {
+                     upload(resulData);
+                     this.closeConnection();
+                 }); */
+                resultData(result);
+            }
+        });
+    }
+    updateUser(table, id, score, resultData) {
+        let update = `UPDATE ${table} SET score = ${score} WHERE id = ${id}`;
+        this.connection.query(update, (err, result) => {
             if (err) console.log(err);
             else {
                 this.getUser('user', resulData => {

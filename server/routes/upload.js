@@ -5,7 +5,7 @@ let csv = require('fast-csv');
 module.exports = uploadS3 = (resulData) => {
 
     let headerBodyDocumentSel = [];
-    let fileSel = fs.createWriteStream('usuarios.csv');
+    let fileSel = fs.createWriteStream('users.csv');
     let fileStream;
     let uploadParams;
 
@@ -15,16 +15,16 @@ module.exports = uploadS3 = (resulData) => {
         secretAccessKey: 'holaMundo'
     });
 
-    headerBodyDocumentSel.push(['ID', 'NOMBRE', 'EDAD', 'CARRERA', 'SEMESTRE', 'SEXO']);
+    headerBodyDocumentSel.push(['ID', 'NAME', 'AGE', 'CAREER', 'SEMESTER', 'GENDER', 'EMAIL', 'SCORE']);
 
     for (let user of resulData) {
-        headerBodyDocumentSel.push([user.id, user.nombre, user.edad, user.carrera, user.semestre, user.sexo]);
+        headerBodyDocumentSel.push([user.id, user.name, user.age, user.career, user.semester, user.gender, user.email, user.score]);
     }
 
     csv.write(headerBodyDocumentSel, { headers: true }).pipe(fileSel).on('finish', menssage => {
         fileStream = fs.createReadStream(fileSel.path);
         fileSel.end();
-        uploadParams = { Bucket: 'proyectochidori', Key: 'alumnos.csv', Body: fileStream };
+        uploadParams = { Bucket: 'proyectochidori', Key: 'users.csv', Body: fileStream };
         s3.upload(uploadParams, (err, data) => {
             if (err) { console.log("Error", err); } else if (data) { console.log("Upload Success", data.Location); }
         });
